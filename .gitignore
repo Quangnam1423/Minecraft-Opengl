@@ -1,16 +1,8 @@
 # ignore all .dll files
 *.dll 
 
-# ignore sln and project files
+# ignore the x64 folder
 
-*.sln
-
-*.vcxproj
-
-*.vcxproj.filters
-
-*vcxproj.user
+x64
 
 
-
-Dependencies
