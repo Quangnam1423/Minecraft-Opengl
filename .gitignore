@@ -1,0 +1,16 @@
+# ignore all .dll files
+*.dll 
+
+# ignore sln and project files
+
+*.sln
+
+*.vcxproj
+
+*.vcxproj.filters
+
+*vcxproj.user
+
+
+
+Dependencies
