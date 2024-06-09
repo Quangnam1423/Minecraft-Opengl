@@ -3,7 +3,12 @@
 
 # ignore the x64 folder
 
+
+#ignore the product files and folders
 /x64/
 
 /.vs/
- /3D Engine/
+
+/3D Engine/
+
+# ------------------------------------
