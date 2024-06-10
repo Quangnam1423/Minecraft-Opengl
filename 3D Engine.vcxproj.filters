@@ -24,10 +24,12 @@
     <ClCompile Include="GLFW_window.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Resource\Shader\shader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="glew32.dll" />
-    <None Include="glfw3.dll" />
     <None Include="kernel32.dll" />
     <None Include="openal32.dll" />
     <None Include="opengl32.dll" />
@@ -42,6 +44,9 @@
     <None Include="sfml-window-2.dll" />
     <None Include="sfml-window-d-2.dll" />
     <None Include=".gitattributes" />
+    <None Include="glfw3.dll" />
+    <None Include="Resource\Shader\vertex.shader" />
+    <None Include="Resource\Shader\fragment.shader" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Resource\picture.jpg">
@@ -53,6 +58,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SingleTon.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource\Shader\shader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

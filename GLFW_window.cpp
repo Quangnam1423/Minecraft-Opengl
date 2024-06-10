@@ -1,6 +1,5 @@
 ﻿#include "GLFW_window.h"
 
-
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow* window);
 
@@ -36,59 +35,14 @@ Window::Window(int _HEIGHT, int _WIDTH)
 
 	glfwMakeContextCurrent(window);
 
-
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 	{
 		std::cout << "Failed to initialize GLAD" << std::endl;
 		return;
 	}
-	int  success;
-	char infoLog[512];
 
-
-	//create vertex shader and fragment shader for pipeline
-	//then we can begin render all things we wants
-	//i call this step is "initzalised" shaders program
-	vertexShader = glCreateShader(GL_VERTEX_SHADER);
-	glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
-	glCompileShader(vertexShader);
-	glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
-	if (!success)
-	{
-		glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
-		std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << infoLog << std::endl;
-	}
-
-
-	fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-	glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
-	glCompileShader(fragmentShader);
-	glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
-	if (!success)
-	{
-		glGetShaderInfoLog(fragmentShader, 512, NULL, infoLog);
-		std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << infoLog << std::endl;
-	}
-
-
-	//bind vertex shader and fragment shader for ShaderProgram for pipeline in GPU
-	//then link them together
-	//and check if it sucessfully linked or not
-	shaderProgram = glCreateProgram();
-	glAttachShader(shaderProgram, vertexShader);
-	glAttachShader(shaderProgram, fragmentShader);
-	glLinkProgram(shaderProgram);
-	glGetShaderiv(shaderProgram, GL_COMPILE_STATUS, &success);
-	if (!success)
-	{
-		glGetShaderInfoLog(shaderProgram, 512, NULL, infoLog);
-		std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << infoLog << std::endl;
-	}
-
-	//delete the program in memory after sucessfully link program for pipeline and shaders.
-	glDeleteShader(vertexShader);
-	glDeleteShader(fragmentShader);
-
+//---------------------------------------------------------------------------------
+	ourShader = new shader("Resource/Shader/vertex.shader" , "Resource/Shader/fragment.shader");
 
 	// create VAO , VBO and EBO for storing buffers data in GPU's memory 
 	glGenVertexArrays(1, &VAO);
@@ -105,8 +59,10 @@ Window::Window(int _HEIGHT, int _WIDTH)
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
 	
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, (void*)0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6* sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
+	glEnableVertexAttribArray(1);
 
 
 	//unbind the buffer and vertex array when load status and vertice sucessfullly
@@ -133,8 +89,8 @@ Window::~Window()
 
 	glDeleteVertexArrays(1, &VAO);
 	glDeleteBuffers(1, &VBO);
-	glDeleteProgram(shaderProgram);
-
+	glDeleteBuffers(1, &EBO);
+	delete ourShader;
 
 	glfwDestroyWindow(window);
 	glfwTerminate();
@@ -159,7 +115,7 @@ void Window::run()
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		//draw all the vertex
-		glUseProgram(shaderProgram);
+		ourShader->use();
 		glBindVertexArray(VAO); 
 		glDrawElements(GL_TRIANGLES, 9 , GL_UNSIGNED_INT , 0);
 
@@ -183,6 +139,8 @@ void processInput(GLFWwindow* window)
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, true);
 }
+
+
 
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
