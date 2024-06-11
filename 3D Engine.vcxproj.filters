@@ -27,29 +27,29 @@
     <ClCompile Include="Resource\Shader\shader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Resource\Texture\stb_image_impl.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="glew32.dll" />
-    <None Include="kernel32.dll" />
-    <None Include="openal32.dll" />
-    <None Include="opengl32.dll" />
-    <None Include="sfml-audio-2.dll" />
-    <None Include="sfml-audio-d-2.dll" />
-    <None Include="sfml-graphics-2.dll" />
-    <None Include="sfml-graphics-d-2.dll" />
-    <None Include="sfml-network-2.dll" />
-    <None Include="sfml-network-d-2.dll" />
-    <None Include="sfml-system-2.dll" />
-    <None Include="sfml-system-d-2.dll" />
-    <None Include="sfml-window-2.dll" />
-    <None Include="sfml-window-d-2.dll" />
     <None Include=".gitattributes" />
-    <None Include="glfw3.dll" />
     <None Include="Resource\Shader\vertex.shader" />
     <None Include="Resource\Shader\fragment.shader" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Resource\picture.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resource\Texture\ronaldo.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resource\Texture\ozil.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resource\Texture\Logo_PTIT_University.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resource\Texture\awesome-face-png.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
@@ -61,6 +61,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Resource\Shader\shader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependencies\include\stb_image.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

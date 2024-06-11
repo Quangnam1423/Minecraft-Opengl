@@ -11,24 +11,16 @@ class shader
 {
 
 public:
-    void setBool(const std::string& name, bool value) const
-    {
-        glUniform1i(glGetUniformLocation(ID, name.c_str()), (int)value);
-    }
+	void setBool(const std::string& name, bool value);
 
-    void setInt(const std::string& name, int value) const
-    {
-        glUniform1i(glGetUniformLocation(ID, name.c_str()), value);
-    }
+    void setInt(const std::string& name, int value);
 
-    void setFloat(const std::string& name, float value) const
-    {
-        glUniform1f(glGetUniformLocation(ID, name.c_str()), value);
-    }
+	void setFloat(const std::string& name, float value);
 	shader() {};
 	shader(std::string vertex, std::string fragment);
 	~shader();
 	void use();
+	GLuint getID();
 private:
 	GLuint ID;
 

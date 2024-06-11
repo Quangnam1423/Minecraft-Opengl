@@ -98,8 +98,28 @@ void shader::checkCompileErrors(GLuint shader, std::string type)
 	}
 }
 
+GLuint shader::getID()
+{
+	return ID;
+}
+
 
 shader::~shader()
 {
 	glDeleteProgram(ID);
+}
+
+void shader::setInt(const std::string& name, int value)
+{
+	glUniform1i(glGetUniformLocation(ID, name.c_str()), value);
+}
+
+void shader::setBool(const std::string& name, bool value)
+{
+	glUniform1i(glGetUniformLocation(ID, name.c_str()), (int)value);
+}
+
+void shader::setFloat(const std::string& name, float value)
+{
+	glUniform1f(glGetUniformLocation(ID, name.c_str()), value);
 }

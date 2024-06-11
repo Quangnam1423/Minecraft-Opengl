@@ -44,6 +44,64 @@ Window::Window(int _HEIGHT, int _WIDTH)
 //---------------------------------------------------------------------------------
 	ourShader = new shader("Resource/Shader/vertex.shader" , "Resource/Shader/fragment.shader");
 
+	unsigned int texture1, texture2;
+	// texture 1
+	// ---------
+	glGenTextures(1, &texture1);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texture1);
+	
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	
+	int width, height, nrChannels;
+	stbi_set_flip_vertically_on_load(true);
+	unsigned char* data = stbi_load("Resource/Texture/ozil.jpg", & width, & height, & nrChannels, 0);
+	if (data)
+	{
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+		glGenerateMipmap(GL_TEXTURE_2D);
+	}
+	else
+	{
+		std::cout << "Failed to load texture" << std::endl;
+	}
+	stbi_image_free(data);
+
+
+	// texture 2
+	// ---------
+	glGenTextures(1, &texture2);
+	glActiveTexture(GL_TEXTURE1);
+	glBindTexture(GL_TEXTURE_2D, texture2);
+	
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	data = stbi_load("Resource/Texture/awesomeface.png", &width, &height, &nrChannels, 0);
+	if (data)
+	{
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+		glGenerateMipmap(GL_TEXTURE_2D);
+	}
+	else
+	{
+		std::cout << "Failed to load texture" << std::endl;
+	}
+	stbi_image_free(data);
+
+	ourShader->use();
+
+	ourShader->setInt("texture1", 0); 
+	ourShader->setInt("texture2", 1);
+
+
 	// create VAO , VBO and EBO for storing buffers data in GPU's memory 
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, &VBO);
@@ -58,11 +116,13 @@ Window::Window(int _HEIGHT, int _WIDTH)
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
-	
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6* sizeof(float), (void*)0);
+	//set attribute for the vertex attribute
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
 	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+	glEnableVertexAttribArray(2);
 
 
 	//unbind the buffer and vertex array when load status and vertice sucessfullly
@@ -72,9 +132,8 @@ Window::Window(int _HEIGHT, int _WIDTH)
 
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-	//Glad: load all function pointers 
-	//________________________________
-	glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
+
+	glClearColor(0.5f , 0.5f , 0.5f , 0.5f);
 	glClear(GL_COLOR_BUFFER_BIT);
 	glfwSwapBuffers(window);
 }
@@ -111,13 +170,13 @@ void Window::run()
 
 		//draw the monitor
 		//_______________
-		glClearColor(0.2f, 0.7f, 1.0f, 1.0f);
+		glClearColor(0.5f , 0.5f , 0.5f , 0.5f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		//draw all the vertex
 		ourShader->use();
 		glBindVertexArray(VAO); 
-		glDrawElements(GL_TRIANGLES, 9 , GL_UNSIGNED_INT , 0);
+		glDrawElements(GL_TRIANGLES, 6 , GL_UNSIGNED_INT , 0);
 
 
 		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
