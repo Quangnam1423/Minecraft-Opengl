@@ -65,13 +65,13 @@ shader::shader(std::string _vertex, std::string _fragment)
 	glDeleteShader(vertex);
 	glDeleteShader(fragment);
 }
-
+// ------------------------------------------------------------------------
 void shader::use()
 {
 	glUseProgram(ID);
 }
 
-
+// ------------------------------------------------------------------------
 //check the status when link or compile the shader program
 
 void shader::checkCompileErrors(GLuint shader, std::string type)
@@ -97,29 +97,73 @@ void shader::checkCompileErrors(GLuint shader, std::string type)
 		}
 	}
 }
-
+// ------------------------------------------------------------------------
 GLuint shader::getID()
 {
 	return ID;
 }
 
-
+// ------------------------------------------------------------------------
 shader::~shader()
 {
 	glDeleteProgram(ID);
 }
-
+// ------------------------------------------------------------------------
 void shader::setInt(const std::string& name, int value)
 {
 	glUniform1i(glGetUniformLocation(ID, name.c_str()), value);
 }
-
+// ------------------------------------------------------------------------
 void shader::setBool(const std::string& name, bool value)
 {
 	glUniform1i(glGetUniformLocation(ID, name.c_str()), (int)value);
 }
-
+// ------------------------------------------------------------------------
 void shader::setFloat(const std::string& name, float value)
 {
 	glUniform1f(glGetUniformLocation(ID, name.c_str()), value);
 }
+// ------------------------------------------------------------------------
+void shader::setVec2(const std::string& name, const glm::vec2& value)
+{
+	glUniform2fv(glGetUniformLocation(ID, name.c_str()), 1, &value[0]);
+}
+// ------------------------------------------------------------------------
+void shader::setVec2(const std::string& name, float x, float y)
+{
+	glUniform2f(glGetUniformLocation(ID, name.c_str()), x, y);
+}
+// ------------------------------------------------------------------------
+void shader::setVec3(const std::string& name, const glm::vec3& value)
+{
+	glUniform3fv(glGetUniformLocation(ID, name.c_str()), 1, &value[0]);
+}
+void shader::setVec3(const std::string& name, float x, float y, float z)
+{
+	glUniform3f(glGetUniformLocation(ID, name.c_str()), x, y, z);
+}
+// ------------------------------------------------------------------------
+void shader::setVec4(const std::string& name, const glm::vec4& value)
+{
+	glUniform4fv(glGetUniformLocation(ID, name.c_str()), 1, &value[0]);
+}
+void shader::setVec4(const std::string& name, float x, float y, float z, float w)
+{
+	glUniform4f(glGetUniformLocation(ID, name.c_str()), x, y, z, w);
+}
+// ------------------------------------------------------------------------
+void shader::setMat2(const std::string& name, const glm::mat2& mat)
+{
+	glUniformMatrix2fv(glGetUniformLocation(ID, name.c_str()), 1, GL_FALSE, &mat[0][0]);
+}
+// ------------------------------------------------------------------------
+void shader::setMat3(const std::string& name, const glm::mat3& mat)
+{
+	glUniformMatrix3fv(glGetUniformLocation(ID, name.c_str()), 1, GL_FALSE, &mat[0][0]);
+}
+// ------------------------------------------------------------------------
+void shader::setMat4(const std::string& name, const glm::mat4& mat)
+{
+	glUniformMatrix4fv(glGetUniformLocation(ID, name.c_str()), 1, GL_FALSE, &mat[0][0]);
+}
+// ------------------------------------------------------------------------
