@@ -35,6 +35,7 @@
     <None Include=".gitattributes" />
     <None Include="Resource\Shader\vertex.shader" />
     <None Include="Resource\Shader\fragment.shader" />
+    <None Include=".gitignore" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Resource\picture.jpg">
@@ -50,6 +51,9 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="Resource\Texture\awesome-face-png.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resource\Texture\awesomeface.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
