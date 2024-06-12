@@ -4,7 +4,6 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow* window);
 
 
-
 /*
 * contructor of engine class
 */
@@ -44,62 +43,12 @@ Window::Window(int _HEIGHT, int _WIDTH)
 //---------------------------------------------------------------------------------
 	ourShader = new shader("Resource/Shader/vertex.shader" , "Resource/Shader/fragment.shader");
 
-	unsigned int texture1, texture2;
-	// texture 1
-	// ---------
-	glGenTextures(1, &texture1);
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, texture1);
-	
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	
-	int width, height, nrChannels;
-	stbi_set_flip_vertically_on_load(true);
-	unsigned char* data = stbi_load("Resource/Texture/ozil.jpg", & width, & height, & nrChannels, 0);
-	if (data)
+	if (this->loadTexture("Resource/Texture/ozil.jpg"))
 	{
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-		glGenerateMipmap(GL_TEXTURE_2D);
+		std::cout << "Load texture successfully!";
 	}
 	else
-	{
-		std::cout << "Failed to load texture" << std::endl;
-	}
-	stbi_image_free(data);
-
-
-	// texture 2
-	// ---------
-	glGenTextures(1, &texture2);
-	glActiveTexture(GL_TEXTURE1);
-	glBindTexture(GL_TEXTURE_2D, texture2);
-	
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-	data = stbi_load("Resource/Texture/awesomeface.png", &width, &height, &nrChannels, 0);
-	if (data)
-	{
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
-		glGenerateMipmap(GL_TEXTURE_2D);
-	}
-	else
-	{
-		std::cout << "Failed to load texture" << std::endl;
-	}
-	stbi_image_free(data);
-
-	ourShader->use();
-
-	ourShader->setInt("texture1", 0); 
-	ourShader->setInt("texture2", 1);
+		std::cout << "fail to load texture!";
 
 
 	// create VAO , VBO and EBO for storing buffers data in GPU's memory 
@@ -170,14 +119,20 @@ void Window::run()
 
 		//draw the monitor
 		//_______________
+		glEnable(GL_DEPTH_TEST);
 		glClearColor(0.5f , 0.5f , 0.5f , 0.5f);
-		glClear(GL_COLOR_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+		glm::mat4 transform = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
+		transform = glm::rotate(transform, (float)glfwGetTime() / 2, glm::vec3(0.0f, 0.0f, 1.0f));
+		transform = glm::rotate(transform, (float)glfwGetTime() / 2, glm::vec3(0.0f, 1.0f, 0.0f)); // Rotate around y-axis
+		transform = glm::rotate(transform, (float)glfwGetTime() / 2, glm::vec3(0.0f, 0.0f, 1.0f));
 		//draw all the vertex
 		ourShader->use();
+		unsigned int transformLoc = glGetUniformLocation(ourShader->getID(), "transform");
+		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transform));
 		glBindVertexArray(VAO); 
-		glDrawElements(GL_TRIANGLES, 6 , GL_UNSIGNED_INT , 0);
-
+		glDrawElements(GL_TRIANGLES, 38 , GL_UNSIGNED_INT , 0);
 
 		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
 		// -------------------------------------------------------------------------------
@@ -185,6 +140,38 @@ void Window::run()
 		glfwPollEvents();
 	}
 
+}
+
+bool Window::loadTexture(std::string name)
+{
+	unsigned int texture;
+	glGenTextures(1, &texture);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texture);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	int width, height, nrChannels;
+	stbi_set_flip_vertically_on_load(true);
+	unsigned char* data = stbi_load(name.c_str(), &width, &height, &nrChannels, 0);
+	if (data)
+	{
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+		glGenerateMipmap(GL_TEXTURE_2D);
+	}
+	else
+	{
+		std::cout << "Failed to load texture" << std::endl;
+		return false;
+	}
+	stbi_image_free(data);
+	ourShader->use();
+	ourShader->setInt("texture1", 0);
+	return true;
 }
 
 
@@ -208,4 +195,6 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 	// height will be significantly larger than specified on retina displays.
 	glViewport(0, 0, width, height);
 }
+
+
 
