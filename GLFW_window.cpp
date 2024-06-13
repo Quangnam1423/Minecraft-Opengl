@@ -124,9 +124,9 @@ void Window::run()
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		glm::mat4 transform = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
-		transform = glm::rotate(transform, (float)glfwGetTime() / 2, glm::vec3(0.0f, 0.0f, 1.0f));
-		transform = glm::rotate(transform, (float)glfwGetTime() / 2, glm::vec3(0.0f, 1.0f, 0.0f)); // Rotate around y-axis
-		transform = glm::rotate(transform, (float)glfwGetTime() / 2, glm::vec3(0.0f, 0.0f, 1.0f));
+		transform = glm::rotate(transform, (float)glfwGetTime() , glm::vec3(0.0f, 0.0f, 1.0f));
+		transform = glm::rotate(transform, (float)glfwGetTime() , glm::vec3(0.0f, 1.0f, 0.0f)); // Rotate around y-axis
+		transform = glm::rotate(transform, (float)glfwGetTime() , glm::vec3(1.0f, 0.0f, 0.0f));
 		//draw all the vertex
 		ourShader->use();
 		unsigned int transformLoc = glGetUniformLocation(ourShader->getID(), "transform");
