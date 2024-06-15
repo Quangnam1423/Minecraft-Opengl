@@ -21,13 +21,16 @@
     <ClCompile Include="Source\glad.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GLFW_window.cpp">
+    <ClCompile Include="Source\GLFW_window.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Resource\Shader\shader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Resource\Texture\stb_image_impl.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -58,16 +61,19 @@
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GLFW_window.h">
+    <ClInclude Include="Source\GLFW_window.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SingleTon.h">
+    <ClInclude Include="Source\SingleTon.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Resource\Shader\shader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Dependencies\include\stb_image.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

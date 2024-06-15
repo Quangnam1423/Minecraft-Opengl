@@ -8,9 +8,10 @@
 #include <glm/gtc/type_ptr.hpp>
 
 #include <iostream>
+//#include <vector>
 
 #include "SingleTon.h"
-#include "Resource/Shader/shader.h"
+#include "../Resource/Shader/shader.h"
 
 
 class Window :public SingleTon
@@ -21,8 +22,24 @@ public:
 	~Window();
 	void run();
 	bool loadTexture(std::string name);
+	void Draw();
 
 private:
+	glm::mat4 projection , view;
+	
+	glm::vec3 cubePositions[10] = {
+		glm::vec3(0.0f,  0.0f,  0.0f),
+		glm::vec3(2.0f,  5.0f, -15.0f),
+		glm::vec3(-1.5f, -2.2f, -2.5f),
+		glm::vec3(-3.8f, -2.0f, -12.3f),
+		glm::vec3(2.4f, -0.4f, -3.5f),
+		glm::vec3(-1.7f,  3.0f, -7.5f),
+		glm::vec3(1.3f, -2.0f, -2.5f),
+		glm::vec3(1.5f,  2.0f, -2.5f),
+		glm::vec3(1.5f,  0.2f, -1.5f),
+		glm::vec3(-1.3f,  1.0f, -1.5f)
+		//glm::vec3 (6.0f , 5.0f , -2.0f)
+	};
 
 	float vertices[288] = {
 		// front face

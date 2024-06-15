@@ -144,7 +144,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="3D Engine.cpp" />
-    <ClCompile Include="GLFW_window.cpp" />
+    <ClCompile Include="Source\Camera.cpp" />
+    <ClCompile Include="Source\GLFW_window.cpp" />
     <ClCompile Include="Resource\Shader\shader.cpp" />
     <ClCompile Include="Resource\Texture\stb_image_impl.cpp" />
     <ClCompile Include="Source\glad.c" />
@@ -164,10 +165,11 @@
     <Image Include="Resource\Texture\ronaldo.png" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GLFW_window.h" />
+    <ClInclude Include="Source\Camera.h" />
+    <ClInclude Include="Source\GLFW_window.h" />
     <ClInclude Include="Resource\Shader\shader.h" />
     <ClInclude Include="Dependencies\include\stb_image.h" />
-    <ClInclude Include="SingleTon.h" />
+    <ClInclude Include="Source\SingleTon.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
