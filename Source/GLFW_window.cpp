@@ -4,9 +4,10 @@
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
+void mouse_button_callback(GLFWwindow* window, int button, int action, int mods);
 
-Window::Window(int _HEIGHT, int _WIDTH) : SCR_HEIGHT(_HEIGHT) , SCR_WIDTH(_WIDTH) , lastX(_HEIGHT/2) , lastY(_WIDTH/2) , 
-								firstMouse(true) , deltaTime(0.0f) , lastFrame(0.0f)
+Window::Window(int _HEIGHT, int _WIDTH) : SCR_HEIGHT(_HEIGHT) , SCR_WIDTH(_WIDTH) , mousePos({(float)_HEIGHT / 2 ,(float)_WIDTH / 2}),
+								firstMouse(false) , deltaTime(0.0f) , lastFrame(0.0f)
 {
 	glfwInitialize();
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) { return; }
@@ -76,7 +77,6 @@ void Window::run()
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 	}
-
 }
 
 bool Window::loadTexture(std::string name)
@@ -156,6 +156,7 @@ void Window::glfwInitialize()
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 	glfwSetCursorPosCallback(window, mouse_callback);
 	glfwSetScrollCallback(window, scroll_callback);
+	glfwSetMouseButtonCallback(window, mouse_button_callback);
 	glfwMakeContextCurrent(window);
 	glfwSetWindowUserPointer(window, this);
 }
@@ -186,24 +187,38 @@ void mouse_callback(GLFWwindow* window,  double xposIn, double yposIn)
 	float ypos = static_cast<float>(yposIn);
 	Window* app = static_cast<Window*> (glfwGetWindowUserPointer(window));
 
-	if (app->firstMouse)
+	if (app->getFirstMouse())
 	{
-		app->lastX = xpos;
-		app->lastY = ypos;
-		app->firstMouse = false;
+		float xoffset = xpos - app->getMousePos().xPos;
+		float yoffset = app->getMousePos().yPos - ypos;
+		app->getCamera()->ProcessMouseMovement(xoffset, yoffset, true);
+		app->setMousePos({ xpos , ypos });
 	}
+}
 
-	float xoffset = xpos - app->lastX;
-	float yoffset = app->lastY - ypos; // reversed since y-coordinates go from bottom to top
 
-	app->lastX = xpos;
-	app->lastY = ypos;
+void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
+{
+	Window* app = static_cast<Window*> (glfwGetWindowUserPointer(window));
+	if (button == GLFW_MOUSE_BUTTON_LEFT)
+	{
+		double xpos, ypos;
+		glfwGetCursorPos(window, &xpos, &ypos);
+		app->setMousePos({ (float)xpos , (float)ypos });
 
-	app->camera->ProcessMouseMovement(xoffset, yoffset , true);
+		if (action == GLFW_PRESS)
+		{
+			app->setFirstMouse(true);
+		}
+		else if (action == GLFW_RELEASE)
+		{
+			app->setFirstMouse(false);
+		}
+	}
 }
 
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 {
 	Window* app = static_cast<Window*> (glfwGetWindowUserPointer(window));
-	app->camera->ProcessMouseScroll(static_cast<float>(yoffset));
+	app->getCamera()->ProcessMouseScroll(static_cast<float>(yoffset));
 }

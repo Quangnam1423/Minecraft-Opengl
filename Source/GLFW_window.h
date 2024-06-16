@@ -16,6 +16,12 @@
 #include "Camera.h"
 
 
+struct mousePosition{
+	float xPos, yPos;
+	mousePosition(float _x, float _y) : xPos(_x), yPos(_y) {};
+	mousePosition(){};
+};
+
 class Window :public SingleTon
 {
 public:
@@ -112,17 +118,27 @@ private:
 		24, 25, 26,		27, 28, 29 ,//top face
 		30, 31, 32,		33, 34, 35//bottom face
 	};
-public:
 	unsigned int SCR_WIDTH;
 	unsigned int SCR_HEIGHT;
 	unsigned int VBO , VAO , EBO;
 	shader* ourShader;
 	Camera* camera;
-	float lastX , lastY;
+	mousePosition mousePos;
 	float deltaTime, lastTime , lastFrame;
 	bool firstMouse;
 
 	GLFWwindow* window;
+
+public:
+	void setMousePos(mousePosition _mousePos) { mousePos = _mousePos; };
+	bool getFirstMouse() { return firstMouse; };
+	float getDelteTime() { return deltaTime; };
+	float getLastTime() { return lastTime; };
+	float getLastFrame() { return lastFrame; };
+	Camera* getCamera() { return camera; };
+
+	mousePosition getMousePos() { return mousePos; };
+	void setFirstMouse(bool _value) { firstMouse = _value; };
 };
 
 
