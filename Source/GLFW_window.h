@@ -8,10 +8,12 @@
 #include <glm/gtc/type_ptr.hpp>
 
 #include <iostream>
-//#include <vector>
+#include <vector>
+#include <iomanip>
 
 #include "SingleTon.h"
 #include "../Resource/Shader/shader.h"
+#include "Camera.h"
 
 
 class Window :public SingleTon
@@ -23,11 +25,13 @@ public:
 	void run();
 	bool loadTexture(std::string name);
 	void Draw();
+	void processInput();
 
 private:
+	void glfwInitialize();
 	glm::mat4 projection , view;
-	
-	glm::vec3 cubePositions[10] = {
+	std::vector<glm::vec3> cubePositions
+	{
 		glm::vec3(0.0f,  0.0f,  0.0f),
 		glm::vec3(2.0f,  5.0f, -15.0f),
 		glm::vec3(-1.5f, -2.2f, -2.5f),
@@ -37,8 +41,11 @@ private:
 		glm::vec3(1.3f, -2.0f, -2.5f),
 		glm::vec3(1.5f,  2.0f, -2.5f),
 		glm::vec3(1.5f,  0.2f, -1.5f),
-		glm::vec3(-1.3f,  1.0f, -1.5f)
-		//glm::vec3 (6.0f , 5.0f , -2.0f)
+		glm::vec3(-1.3f, -2.0f, -0.5f),
+		glm::vec3(-1.5f,  -2.0f, -4.5f),
+		glm::vec3(-1.5f,  -0.2f, -3.5f),
+		glm::vec3(-1.3f,  1.0f, -1.5f),
+		glm::vec3 (6.0f , 5.0f , -2.0f)
 	};
 
 	float vertices[288] = {
@@ -105,15 +112,17 @@ private:
 		24, 25, 26,		27, 28, 29 ,//top face
 		30, 31, 32,		33, 34, 35//bottom face
 	};
-
+public:
 	unsigned int SCR_WIDTH;
 	unsigned int SCR_HEIGHT;
 	unsigned int VBO , VAO , EBO;
 	shader* ourShader;
+	Camera* camera;
+	float lastX , lastY;
+	float deltaTime, lastTime , lastFrame;
+	bool firstMouse;
 
 	GLFWwindow* window;
 };
 
 
-
-	
