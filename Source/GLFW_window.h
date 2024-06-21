@@ -13,7 +13,19 @@
 
 #include "SingleTon.h"
 #include "../Resource/Shader/shader.h"
+#include "Model.h"
 #include "Camera.h"
+
+struct mousePosition {
+	float xpos;
+	float ypos;
+	mousePosition(float _x, float _y)
+	{
+		xpos = _x;
+		ypos = _y;
+	};
+	mousePosition() {};
+};
 
 
 class Window :public SingleTon
@@ -118,10 +130,10 @@ public:
 	unsigned int VBO , VAO , EBO;
 	shader* ourShader;
 	Camera* camera;
-	float lastX , lastY;
+	mousePosition mousePos;
 	float deltaTime, lastTime , lastFrame;
 	bool firstMouse;
-
+	Model *ourModel;
 	GLFWwindow* window;
 };
 

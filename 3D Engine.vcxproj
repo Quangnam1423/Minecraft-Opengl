@@ -114,13 +114,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\include\SFML;$(SolutionDir)Dependencies\include\GLFW;$(SolutionDir)Dependencies\include\GL;D:\3D Engine\Dependencies\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\include\SFML;$(SolutionDir)Dependencies\include\GLFW;$(SolutionDir)Dependencies\include\GL;$(SolutionDir)Dependencies\glm;$(SolutionDir)Dependencies\assimp</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)\Dependencies\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;kernel32.lib;glew32.lib;glfw3.lib;glu32.lib;Gdi32.lib;Shell32.lib;glfw3dll.lib;User32.lib;sfml-graphics.lib;sfml-system.lib;sfml-audio.lib;sfml-window.lib</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;kernel32.lib;glew32.lib;glfw3.lib;glu32.lib;Gdi32.lib;Shell32.lib;glfw3dll.lib;User32.lib;sfml-graphics.lib;sfml-system.lib;sfml-audio.lib;sfml-window.lib;assimp-vc143-mtd.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -131,7 +131,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\include\SFML;$(SolutionDir)Dependencies\include\GLFW;$(SolutionDir)Dependencies\include\GL;D:\3D Engine\Dependencies\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\include\SFML;$(SolutionDir)Dependencies\include\GLFW;$(SolutionDir)Dependencies\include\GL;$(SolutionDir)Dependencies\glm</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -139,7 +139,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)\Dependencies\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;kernel32.lib;glew32.lib;glfw3.lib;glu32.lib;Gdi32.lib;Shell32.lib;glfw3dll.lib;User32.lib;sfml-graphics.lib;sfml-system.lib;sfml-audio.lib;sfml-window.lib</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;kernel32.lib;glew32.lib;glfw3.lib;glu32.lib;Gdi32.lib;Shell32.lib;glfw3dll.lib;User32.lib;sfml-graphics.lib;sfml-system.lib;sfml-audio.lib;sfml-window.lib;assimp-vc143-mt.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -149,11 +149,16 @@
     <ClCompile Include="Resource\Shader\shader.cpp" />
     <ClCompile Include="Resource\Texture\stb_image_impl.cpp" />
     <ClCompile Include="Source\glad.c" />
+    <ClCompile Include="Source\Model.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitattributes" />
     <None Include=".gitignore" />
+    <None Include="Resource\Shader\1.model_loading.fs" />
+    <None Include="Resource\Shader\1.model_loading.vs" />
     <None Include="Resource\Shader\fragment.shader" />
+    <None Include="Resource\Shader\LightingFragment.shader" />
+    <None Include="Resource\Shader\LightingVertex.shader" />
     <None Include="Resource\Shader\vertex.shader" />
   </ItemGroup>
   <ItemGroup>
@@ -165,10 +170,12 @@
     <Image Include="Resource\Texture\ronaldo.png" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Mesh.h" />
     <ClInclude Include="Source\Camera.h" />
     <ClInclude Include="Source\GLFW_window.h" />
     <ClInclude Include="Resource\Shader\shader.h" />
     <ClInclude Include="Dependencies\include\stb_image.h" />
+    <ClInclude Include="Source\Model.h" />
     <ClInclude Include="Source\SingleTon.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
