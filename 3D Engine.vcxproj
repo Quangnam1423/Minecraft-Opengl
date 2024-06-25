@@ -114,7 +114,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\include\SFML;$(SolutionDir)Dependencies\include\GLFW;$(SolutionDir)Dependencies\include\GL;D:\3D Engine\Dependencies\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\include\SFML;$(SolutionDir)Dependencies\include\GLFW;$(SolutionDir)Dependencies\include\GL;$(SolutionDir)Dependencies\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -131,7 +131,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\include\SFML;$(SolutionDir)Dependencies\include\GLFW;$(SolutionDir)Dependencies\include\GL;D:\3D Engine\Dependencies\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\include\SFML;$(SolutionDir)Dependencies\include\GLFW;$(SolutionDir)Dependencies\include\GL;$(SolutionDir)Dependencies\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -144,11 +144,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="3D Engine.cpp" />
+    <ClCompile Include="Resource\Texture\FastNoiseLite_Impl.cpp" />
     <ClCompile Include="Source\Camera.cpp" />
     <ClCompile Include="Source\GLFW_window.cpp" />
     <ClCompile Include="Resource\Shader\shader.cpp" />
     <ClCompile Include="Resource\Texture\stb_image_impl.cpp" />
     <ClCompile Include="Source\glad.c" />
+    <ClCompile Include="Source\Grass.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitattributes" />
@@ -158,17 +160,17 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="Resource\picture.jpg" />
-    <Image Include="Resource\Texture\awesome-face-png.png" />
-    <Image Include="Resource\Texture\awesomeface.png" />
-    <Image Include="Resource\Texture\Logo_PTIT_University.png" />
-    <Image Include="Resource\Texture\ozil.jpg" />
-    <Image Include="Resource\Texture\ronaldo.png" />
+    <Image Include="Resource\Texture\block_atlas.png" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Dependencies\include\FastNoiseLite.h" />
+    <ClInclude Include="Source\Block.h" />
     <ClInclude Include="Source\Camera.h" />
+    <ClInclude Include="Source\cube.h" />
     <ClInclude Include="Source\GLFW_window.h" />
     <ClInclude Include="Resource\Shader\shader.h" />
     <ClInclude Include="Dependencies\include\stb_image.h" />
+    <ClInclude Include="Source\Grass.h" />
     <ClInclude Include="Source\SingleTon.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

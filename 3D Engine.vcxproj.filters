@@ -33,6 +33,12 @@
     <ClCompile Include="Source\Camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Grass.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Resource\Texture\FastNoiseLite_Impl.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitattributes" />
@@ -44,19 +50,7 @@
     <Image Include="Resource\picture.jpg">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="Resource\Texture\ronaldo.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="Resource\Texture\ozil.jpg">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="Resource\Texture\Logo_PTIT_University.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="Resource\Texture\awesome-face-png.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="Resource\Texture\awesomeface.png">
+    <Image Include="Resource\Texture\block_atlas.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
@@ -74,6 +68,18 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\Camera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Grass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependencies\include\FastNoiseLite.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\cube.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Block.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
