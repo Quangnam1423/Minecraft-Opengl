@@ -11,25 +11,23 @@ Window::Window(int _HEIGHT, int _WIDTH) : SCR_HEIGHT(_HEIGHT) ,
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 		return;
 
-							// position                 worldUp                              look At 
-	camera = new Camera(glm::vec3(0.0f, 5.0f, 3.0f) , glm::vec3(0.0f , 1.0f , 0.0f) , glm::vec3(0.0f , 0.0f , 0.0f));
+							// position                                                     worldUp                              look At 
+	camera = new Camera(glm::vec3(0.0f , 0.0f , 3.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f));
 	ourShader = new shader("Resource/Shader/vertex.shader" , "Resource/Shader/fragment.shader");
-	Grass *grass = new Grass(glm::vec3(0.0f, -0.5f, -5.0f));
-	block = new  Block{ dynamic_cast<Cube*>(grass) , true , glm::vec3(0.0f , -0.5f , -5.0f) , Type::GRASS};
+	chunk = new Chunk(offset{ 0 , 0 }, true);
+	cube = new Cube();
 	ourShader->use();
 	projection = glm::mat4(1.0f);
 	projection = glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
 	ourShader->setMat4("projection", projection);
 	view = glm::mat4(1.0f);
+	glm::mat4 model(1.0f);
+	model = glm::translate(model, glm::vec3(0.0f, -0.5f, -5.0f));
+	ourShader->setMat4("model" , model);
 	view  = camera->GetViewMatrix();
 	ourShader->setMat4("view", view);
-
 	if (!loadTexture("Resource/Texture/block_atlas.png")) { std::cout << "Can't load texture to GPU" << std::endl; }
 
-	glEnable(GL_CULL_FACE);
-	glFrontFace(GL_CW);
-	glCullFace(GL_CULL_FACE);
-	glEnable(GL_DEPTH_TEST);
 	glfwSwapBuffers(window);
 }
 
@@ -95,13 +93,14 @@ void Window::Draw()
 {
 	view = camera->GetViewMatrix();
 	ourShader->setMat4("view", view);
-	projection = glm::perspective(glm::radians(camera->getZoom()), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+	projection = glm::perspective(glm::radians(camera->getZoom()), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 500.0f);
 	ourShader->setMat4("projection", projection);
 	glEnable(GL_DEPTH_TEST);
 	glClearColor(0.5f, 0.5f, 0.5f, 0.5f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	//---------------------------------------------------------------------------------------
-	block->thiscube->Draw(*ourShader);
+	chunk->Draw(*ourShader);
+	cube->Draw(*ourShader);
 }
 
 void Window::glfwInitialize() 
@@ -149,7 +148,10 @@ void Window::processInput()
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
+	Window* app = static_cast<Window*> (glfwGetWindowUserPointer(window));
 	glViewport(0, 0, width, height);
+	app->SCR_WIDTH = (float)width;
+	app->SCR_HEIGHT = (float)height;
 }
 
 void mouse_callback(GLFWwindow* window,  double xposIn, double yposIn)

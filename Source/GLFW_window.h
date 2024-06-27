@@ -15,12 +15,12 @@
 #include "../Resource/Shader/shader.h"
 #include "Camera.h"
 #include "Block.h"
+#include "Chunk.h"
 
 
 struct mousePosition{
 	float xPos, yPos;
 	mousePosition(float _x, float _y) : xPos(_x), yPos(_y) {};
-	mousePosition(){};
 };
 
 class Window :public SingleTon
@@ -33,15 +33,16 @@ public:
 	void Draw();
 	void processInput();
 
+	unsigned int SCR_WIDTH;
+	unsigned int SCR_HEIGHT;
+
 private:
 	void glfwInitialize();
 	glm::mat4 projection , view;
-	unsigned int SCR_WIDTH;
-	unsigned int SCR_HEIGHT;
+
 	shader* ourShader;
 	Camera* camera;
 	//Grass* grass;
-	struct Block* block;
 	struct mousePosition mousePos;
 	float deltaTime, lastTime , lastFrame;
 	bool firstMouse;
@@ -50,12 +51,14 @@ private:
 
 public:
 	void setMousePos(mousePosition _mousePos) { mousePos = _mousePos; };
+	shader* getShader() { return ourShader; };
 	bool getFirstMouse() { return firstMouse; };
 	float getDelteTime() { return deltaTime; };
 	float getLastTime() { return lastTime; };
 	float getLastFrame() { return lastFrame; };
 	Camera* getCamera() { return camera; };
-
+	Chunk* chunk;
+	Cube* cube;
 	mousePosition getMousePos() { return mousePos; };
 	void setFirstMouse(bool _value) { firstMouse = _value; };
 };

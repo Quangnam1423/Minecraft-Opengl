@@ -27,16 +27,19 @@
     <ClCompile Include="Resource\Shader\shader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Resource\Texture\stb_image_impl.cpp">
+    <ClCompile Include="Source\stb_image_impl.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\Camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Grass.cpp">
+    <ClCompile Include="Source\FastNoiseLite_Impl.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Resource\Texture\FastNoiseLite_Impl.cpp">
+    <ClCompile Include="Source\Chunk.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ChunkMesh.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -51,6 +54,12 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="Resource\Texture\block_atlas.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resource\Texture\water.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resource\Texture\tex_array_0.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
@@ -70,16 +79,16 @@
     <ClInclude Include="Source\Camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Grass.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Dependencies\include\FastNoiseLite.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\cube.h">
+    <ClInclude Include="Source\Block.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Block.h">
+    <ClInclude Include="Source\Chunk.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ChunkMesh.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
