@@ -8,26 +8,26 @@ Chunk::Chunk(struct offset _offset, bool _visible)
 	m_offset = _offset;
 	visible = _visible;
 	m_mesh = new ChunkMesh();
+	//blocks.resize(CHUNK_SIZE * CHUNK_SIZE * CHUNK_HEIGHT);
 	chunk_init();
 }
 
 void Chunk::Draw(shader& ourShader)
 {
-	m_mesh->Draw(ourShader);
+	m_mesh->Draw(ourShader , m_offset);
 }
 
 void Chunk::chunk_init()
 {
 	int count = 0;
-	for (int x = 0; x < CHUNK_SIZE; x++)
+	for (int y = 0; y < CHUNK_HEIGHT; y++)
 	{
 		for (int z = 0; z < CHUNK_SIZE; z++)
 		{
-			for (int y = 0; y < CHUNK_HEIGHT; y++)
+			for (int x = 0; x < CHUNK_SIZE; x++)
 			{
-				unsigned int id = x + z *CHUNK_SIZE + y * CHUNK_AREA;
+				unsigned int id = x + y + z;
 				glm::vec3 position = get_position(x, y, z , this->m_offset);
-				std::cout << position.x << " " << position.y << " " << position.z << std::endl;
 				Block* new_block = new Block(Type::GRASS , position , id);
 				blocks.push_back(new_block);
 			}
@@ -35,9 +35,9 @@ void Chunk::chunk_init()
 	}
 
 	// build chunk mesh 
-	for (int x = 0; x < CHUNK_SIZE; x++)
+	for (int z = 0; z < CHUNK_SIZE; z++)
 	{
-		for (int z = 0; z < CHUNK_SIZE; z++)
+		for (int x = 0; x < CHUNK_SIZE; x++)
 		{
 			for (int y = 0; y < CHUNK_HEIGHT; y++)
 			{
@@ -80,10 +80,7 @@ void Chunk::chunk_init()
 
 glm::vec3 get_position(int x, int y, int z, struct offset m_offset)
 {
-	glm::vec2 chunk_position;
-	chunk_position.x = m_offset.x * CHUNK_SIZE;
-	chunk_position.y = m_offset.y * CHUNK_SIZE;
-	return glm::vec3(chunk_position.x + 0.5f + x, y + 0.5f,-z + chunk_position.y - 0.5f);
+	return glm::vec3(0.5f + x, y + 0.5f,z - 0.5f);
 }
 
 bool check_is_solid(glm::vec3 position, std::vector<Block*>& blocks)

@@ -42,8 +42,7 @@ void Camera::ProcessKeyboard(Camera_Movement direction, float deltaTime)
     }
     if (direction == JUMP)
     {
-        // 
-        std::cout << "jump" << std::endl;
+        cameraPosition[1] += worldUp[1] * velocity;
     }
     cameraTarget = cameraPosition + cameraDirection;
 }

@@ -18,6 +18,7 @@
 #define CHUNK_HEIGHT 16
 #define CHUNK_AREA 256
 
+class ChunkMesh;
 
 struct offset {
 	int x;

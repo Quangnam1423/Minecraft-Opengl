@@ -9,7 +9,10 @@
 #include <vector>
 
 #include "Block.h"
+#include "Chunk.h"
 #include "../Resource/Shader/shader.h"
+
+class Chunk;
 
 class ChunkMesh
 {
@@ -23,7 +26,7 @@ public:
 
 	void addAttribute();
 
-	void Draw(shader& ourShader);
+	void Draw(shader& ourShader , struct offset _offset);
 private:
 	GLuint VAO, VBO, EBO;
 	std::vector<Vertex> vertices;

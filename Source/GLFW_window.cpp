@@ -12,18 +12,15 @@ Window::Window(int _HEIGHT, int _WIDTH) : SCR_HEIGHT(_HEIGHT) ,
 		return;
 
 							// position                                                     worldUp                              look At 
-	camera = new Camera(glm::vec3(0.0f , 0.0f , 3.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f));
+	camera = new Camera(glm::vec3(0.0f , 0.0f , CHUNK_SIZE), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f));
 	ourShader = new shader("Resource/Shader/vertex.shader" , "Resource/Shader/fragment.shader");
 	chunk = new Chunk(offset{ 0 , 0 }, true);
-	cube = new Cube();
+	//cube = new Cube();
 	ourShader->use();
 	projection = glm::mat4(1.0f);
 	projection = glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
 	ourShader->setMat4("projection", projection);
 	view = glm::mat4(1.0f);
-	glm::mat4 model(1.0f);
-	model = glm::translate(model, glm::vec3(0.0f, -0.5f, -5.0f));
-	ourShader->setMat4("model" , model);
 	view  = camera->GetViewMatrix();
 	ourShader->setMat4("view", view);
 	if (!loadTexture("Resource/Texture/block_atlas.png")) { std::cout << "Can't load texture to GPU" << std::endl; }
@@ -100,7 +97,7 @@ void Window::Draw()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	//---------------------------------------------------------------------------------------
 	chunk->Draw(*ourShader);
-	cube->Draw(*ourShader);
+	//cube->Draw(*ourShader);
 }
 
 void Window::glfwInitialize() 
@@ -142,7 +139,7 @@ void Window::processInput()
 		camera->ProcessKeyboard(RIGHT, deltaTime);
 	if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS)
 	{
-		std::cout << "Jump" << std::endl;
+		camera->ProcessKeyboard(JUMP, deltaTime);
 	}
 }
 

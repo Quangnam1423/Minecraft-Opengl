@@ -49,9 +49,12 @@ void ChunkMesh::add_vertices(std::vector<Vertex> _vertices)
 	return;
 }
 
-void ChunkMesh::Draw(shader& ourShader)
+void ChunkMesh::Draw(shader& ourShader , struct offset _offset)
 {
 	ourShader.use();
+	glm::mat4 model(1.0f);
+	model = glm::translate(model, glm::vec3((float)_offset.x * CHUNK_SIZE , 0.0f , (float)_offset.y * CHUNK_SIZE));
+	ourShader.setMat4("model", model);
 	glBindVertexArray(VAO);
 	glDrawElements(GL_TRIANGLES, static_cast<unsigned int>(indices.size()), GL_UNSIGNED_INT, 0);
 	glBindVertexArray(0);
