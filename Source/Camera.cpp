@@ -44,6 +44,10 @@ void Camera::ProcessKeyboard(Camera_Movement direction, float deltaTime)
     {
         cameraPosition[1] += worldUp[1] * velocity;
     }
+    if (direction == DOWN)
+    {
+        cameraPosition[1] -= worldUp[1] * velocity;
+    }
     cameraTarget = cameraPosition + cameraDirection;
 }
 

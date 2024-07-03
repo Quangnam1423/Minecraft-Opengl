@@ -150,8 +150,10 @@
     <ClCompile Include="Source\Camera.cpp" />
     <ClCompile Include="Source\GLFW_window.cpp" />
     <ClCompile Include="Resource\Shader\shader.cpp" />
+    <ClCompile Include="Source\Offset.cpp" />
     <ClCompile Include="Source\stb_image_impl.cpp" />
     <ClCompile Include="Source\glad.c" />
+    <ClCompile Include="Source\World.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitattributes" />
@@ -166,6 +168,7 @@
     <Image Include="Resource\Texture\water.png" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Offset.h" />
     <ClInclude Include="Source\ChunkMesh.h" />
     <ClInclude Include="Dependencies\include\FastNoiseLite.h" />
     <ClInclude Include="Source\Block.h" />
@@ -175,6 +178,7 @@
     <ClInclude Include="Resource\Shader\shader.h" />
     <ClInclude Include="Dependencies\include\stb_image.h" />
     <ClInclude Include="Source\SingleTon.h" />
+    <ClInclude Include="Source\World.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

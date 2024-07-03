@@ -11,6 +11,7 @@
 #include <vector>
 #include <iomanip>
 
+
 #include "SingleTon.h"
 #include "../Resource/Shader/shader.h"
 #include "Camera.h"
@@ -42,7 +43,6 @@ private:
 
 	shader* ourShader;
 	Camera* camera;
-	//Grass* grass;
 	struct mousePosition mousePos;
 	float deltaTime, lastTime , lastFrame;
 	bool firstMouse;
@@ -57,10 +57,9 @@ public:
 	float getLastTime() { return lastTime; };
 	float getLastFrame() { return lastFrame; };
 	Camera* getCamera() { return camera; };
-	Chunk* chunk;
-	Cube* cube;
 	mousePosition getMousePos() { return mousePos; };
 	void setFirstMouse(bool _value) { firstMouse = _value; };
+	World* _world;
 };
 
 // preprocessor

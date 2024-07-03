@@ -1,4 +1,5 @@
 ﻿#include "GLFW_window.h"
+#include <iomanip>
 
 
 
@@ -12,10 +13,10 @@ Window::Window(int _HEIGHT, int _WIDTH) : SCR_HEIGHT(_HEIGHT) ,
 		return;
 
 							// position                                                     worldUp                              look At 
-	camera = new Camera(glm::vec3(0.0f , 0.0f , CHUNK_SIZE), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f));
+	camera = new Camera(glm::vec3(0.0f , CHUNK_HEIGHT , CHUNK_SIZE), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f));
 	ourShader = new shader("Resource/Shader/vertex.shader" , "Resource/Shader/fragment.shader");
-	chunk = new Chunk(offset{ 0 , 0 }, true);
-	//cube = new Cube();
+	
+	_world = new World();
 	ourShader->use();
 	projection = glm::mat4(1.0f);
 	projection = glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
@@ -95,9 +96,7 @@ void Window::Draw()
 	glEnable(GL_DEPTH_TEST);
 	glClearColor(0.5f, 0.5f, 0.5f, 0.5f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	//---------------------------------------------------------------------------------------
-	chunk->Draw(*ourShader);
-	//cube->Draw(*ourShader);
+	_world->Draw(*ourShader);
 }
 
 void Window::glfwInitialize() 
@@ -141,6 +140,8 @@ void Window::processInput()
 	{
 		camera->ProcessKeyboard(JUMP, deltaTime);
 	}
+	if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS || glfwGetKey(window, GLFW_KEY_RIGHT_SHIFT) == GLFW_PRESS)
+		camera->ProcessKeyboard(DOWN, deltaTime);
 }
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
