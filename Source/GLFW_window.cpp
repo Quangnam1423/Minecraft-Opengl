@@ -13,7 +13,7 @@ Window::Window(int _HEIGHT, int _WIDTH) : SCR_HEIGHT(_HEIGHT) ,
 		return;
 
 							// position                                                     worldUp                              look At 
-	camera = new Camera(glm::vec3(0.0f , CHUNK_HEIGHT , CHUNK_SIZE), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f));
+	camera = new Camera(glm::vec3(0.0f , CHUNK_HEIGHT / 2 , CHUNK_SIZE), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f));
 	ourShader = new shader("Resource/Shader/vertex.shader" , "Resource/Shader/fragment.shader");
 	
 	_world = new World();

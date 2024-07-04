@@ -1,8 +1,13 @@
 #include "World.h"
+#include <cstdlib>
 
 
 World::World()
 {
+	noise.SetNoiseType(FastNoiseLite::NoiseType_Perlin);
+	Seed = rand() % INT_MAX;
+	noise.SetFrequency(0.015);
+	noise.SetSeed(Seed);
 	world_init();
 }
 

@@ -8,7 +8,8 @@ Chunk::Chunk(struct offset _offset, bool _visible , World *_world) : m_world(_wo
 	m_offset = _offset;
 	visible = _visible;
 	m_mesh = new ChunkMesh();
-	chunk_init();
+	blocks.resize(CHUNK_SIZE * CHUNK_SIZE * CHUNK_HEIGHT, nullptr);
+	chunk_init(m_world->noise);
 }
  
 void Chunk::Draw(shader& ourShader)
@@ -16,24 +17,24 @@ void Chunk::Draw(shader& ourShader)
 	m_mesh->Draw(ourShader , m_offset);
 }
 
-void Chunk::chunk_init()
+void Chunk::chunk_init(FastNoiseLite &noise)
 {
-	int count = 0;
-	for (int y = 0; y < CHUNK_HEIGHT; y++)
+	for (int z = 0; z < CHUNK_SIZE; z++)
 	{
-		for (int z = 0; z < CHUNK_SIZE; z++)
+		for (int x = 0; x < CHUNK_SIZE; x++)
 		{
-			for (int x = 0; x < CHUNK_SIZE; x++)
+			float x_noise = static_cast<float>(m_offset.x * CHUNK_SIZE + x);
+			float y_noise = static_cast<float>(m_offset.y * CHUNK_SIZE + z);
+			int height_size = CHUNK_SIZE * noise.GetNoise(x_noise, y_noise) * 2 + CHUNK_HEIGHT / 2;
+			for (int y = 0; y < height_size; y++)
 			{
 				unsigned int id = x + y + z;
-				glm::vec3 position = get_position(x, y, z , this->m_offset);
-				Block* new_block = new Block(Type::GRASS , position , id);
-				blocks.push_back(new_block);
+				glm::vec3 position = get_position(x, y, z, this->m_offset);
+				int block_id = x + z * CHUNK_SIZE + y * CHUNK_AREA;
+				blocks[block_id] = new Block(Type::GRASS, position, id);
 			}
 		}
 	}
-
-
 }
 
 void Chunk::build_chunkmesh()
@@ -46,6 +47,8 @@ void Chunk::build_chunkmesh()
 			for (int y = 0; y < CHUNK_HEIGHT; y++)
 			{
 				unsigned int id = x + z * CHUNK_SIZE + y * CHUNK_AREA;
+				if (blocks[id] == nullptr)
+					continue;
 				//top face
 				if (!check_is_solid(glm::vec3(x, y + 1, z), this))
 				{
@@ -121,7 +124,7 @@ bool check_is_solid(glm::vec3 position, Chunk* _chunk)
 	if (next_offset == _chunk->get_offset())
 	{
 		int id = position.x + position.z * CHUNK_SIZE + position.y * CHUNK_AREA;
-		if (_chunk->blocks[id]->get_type() == Type::GRASS)
+		if (_chunk->blocks[id] != nullptr && _chunk->blocks[id]->get_type() == Type::GRASS)
 			return true;
 		return false;
 	}
@@ -131,9 +134,12 @@ bool check_is_solid(glm::vec3 position, Chunk* _chunk)
 		if (_world->map.count(next_offset))
 		{
 			int id = next_position.x + next_position.z * CHUNK_SIZE + next_position.y * CHUNK_AREA;
+			if (_world->map[next_offset]->blocks[id] == nullptr)
+				return false;
 			if (_world->map[next_offset]->blocks[id]->get_type() == Type::GRASS)
 				return true;
 			return false;
 		}
+		return true;
 	}
 }

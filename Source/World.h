@@ -6,6 +6,7 @@
 #include <glad/glad.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include <FastNoiseLite.h>
 
 #include "Chunk.h"
 #include "Chunkmesh.h"
@@ -24,8 +25,8 @@ public:
 	World();
 	~World();
 	void Draw(shader& ourShader);std::unordered_map<offset, Chunk*> map;
-	
-	//void world_resize(glm::vec3 position);
+	FastNoiseLite noise;
+	int Seed;
 private:
 	void world_init();
 	

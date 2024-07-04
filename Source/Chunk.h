@@ -4,6 +4,7 @@
 #include <glad/glad.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include <FastNoiseLite.h>
 
 #include <vector>
 #include <string>
@@ -38,7 +39,7 @@ public:
 	void build_chunkmesh();
 private:
 	
-	void chunk_init();
+	void chunk_init(FastNoiseLite& noise);
 	ChunkMesh *m_mesh;
 	struct offset m_offset;
 	bool visible;
