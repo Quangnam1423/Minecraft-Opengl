@@ -120,7 +120,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)\Dependencies\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;kernel32.lib;glew32.lib;glfw3.lib;glu32.lib;Gdi32.lib;Shell32.lib;glfw3dll.lib;User32.lib;sfml-graphics.lib;sfml-system.lib;sfml-audio.lib;sfml-window.lib</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;kernel32.lib;glfw3.lib;glu32.lib;Gdi32.lib;Shell32.lib;glfw3dll.lib;User32.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -139,7 +139,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)\Dependencies\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;kernel32.lib;glew32.lib;glfw3.lib;glu32.lib;Gdi32.lib;Shell32.lib;glfw3dll.lib;User32.lib;sfml-graphics.lib;sfml-system.lib;sfml-audio.lib;sfml-window.lib</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;kernel32.lib;glfw3.lib;glu32.lib;Gdi32.lib;Shell32.lib;glfw3dll.lib;User32.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
