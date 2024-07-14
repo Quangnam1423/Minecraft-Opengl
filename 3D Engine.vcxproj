@@ -163,6 +163,7 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="Resource\picture.jpg" />
+    <Image Include="Resource\Texture\blocks4.png" />
     <Image Include="Resource\Texture\block_atlas.png" />
     <Image Include="Resource\Texture\tex_array_0.png" />
     <Image Include="Resource\Texture\water.png" />

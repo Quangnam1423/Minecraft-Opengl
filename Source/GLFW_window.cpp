@@ -24,7 +24,7 @@ Window::Window(int _HEIGHT, int _WIDTH) : SCR_HEIGHT(_HEIGHT) ,
 	view = glm::mat4(1.0f);
 	view  = camera->GetViewMatrix();
 	ourShader->setMat4("view", view);
-	if (!loadTexture("Resource/Texture/block_atlas.png")) { std::cout << "Can't load texture to GPU" << std::endl; }
+	if (!loadTexture("Resource/Texture/blocks4.png")) { std::cout << "Can't load texture to GPU" << std::endl; }
 
 	glfwSwapBuffers(window);
 }
@@ -94,6 +94,7 @@ void Window::Draw()
 	projection = glm::perspective(glm::radians(camera->getZoom()), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 500.0f);
 	ourShader->setMat4("projection", projection);
 	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_LESS);
 	glClearColor(0.5f, 0.5f, 0.5f, 0.5f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	_world->Draw(*ourShader);

@@ -44,11 +44,17 @@ void ChunkMesh::add_vertex(Vertex _vertex)
 
 void ChunkMesh::add_vertices(std::vector<Vertex> _vertices)
 {
+	GLuint temp = vertices.size();
 	for (int i = 0 ; i < _vertices.size() ; i++)
 	{
 		vertices.push_back(_vertices[i]);
-		indices.push_back(indices.size());
 	}
+	indices.push_back(temp);
+	indices.push_back(temp + 1);
+	indices.push_back(temp + 2);
+	indices.push_back(temp + 2);
+	indices.push_back(temp + 3);
+	indices.push_back(temp);
 	return;
 }
 

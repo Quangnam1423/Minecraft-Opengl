@@ -68,6 +68,9 @@
     <Image Include="Resource\Texture\tex_array_0.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="Resource\Texture\blocks4.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\GLFW_window.h">

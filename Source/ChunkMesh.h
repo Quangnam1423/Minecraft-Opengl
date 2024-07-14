@@ -8,6 +8,7 @@
 #include <FastNoiseLite.h>
 
 #include <vector>
+#include <iostream>
 
 #include "Block.h"
 #include "Offset.h"

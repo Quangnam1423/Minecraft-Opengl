@@ -38,17 +38,19 @@
 #define BLOCK_BACK_TOPRIGHT(x, y, z) 		glm::vec3(-0.5f + x, 0.5f  + y, -0.5f + z)
 
 //Textcoords of the texture
-#define TEXTCOORD_BOTTOMLEFT(x , y) glm::vec2(x + 0.0f, y + 0.0f)
-#define TEXTCOORD_BOTTOMRIGHT(x , y) glm::vex2(x + 0.333f , y + 0.0f)
-#define TEXTCOORD_TOPLEFT(x , y) glm::vec2(x + 0.0f , y + 0.333f)
-#define TEXTCOORD_TOPRIGHT(x , y) glm::vec2(x + 0.333f , y + 0.333f)
+#define TEXTCOORD_BOTTOMLEFT glm::vec2(0.0f, 0.0f)
+#define TEXTCOORD_BOTTOMRIGHT glm::vec2(0.125f , 0.0f)
+#define TEXTCOORD_TOPLEFT glm::vec2(0.0f , 0.125f)
+#define TEXTCOORD_TOPRIGHT glm::vec2(0.125f ,0.125f)
 
 //Grass alas coords
-#define GRASS_TOP_ALAS glm::vec2(0.75f , 0.5f)
-#define GRASS_SIDE_ALAS glm::vec2(0.5f , 0.75f)
-#define GRASS_BOTTOM_ALAS glm::vec2(0.25f , 0.75f)
+#define GRASS_TOP_ALAS glm::vec2(0.0f , 0.875f)
+#define GRASS_SIDE_ALAS glm::vec2(0.0f , 0.75f)
+#define GRASS_BOTTOM_ALAS glm::vec2(0.0f , 0.625f)
 //Sand alas coords
-#define SAND_ALAS glm::vec2(0.25f , 0.75f)
+#define SAND_ALAS glm::vec2(0.5f , 0.875f)
+//Rock alas coords
+#define STONE_ALAS glm::vec2(0.125f , 0.875f)
 
 
 
@@ -119,194 +121,222 @@ public:
 	//front face
 	std::vector<Vertex> get_front_face()
 	{
+		glm::vec2 front_alas;
+		if (type == Type::GRASS)
+			front_alas = GRASS_SIDE_ALAS;
+		else if (type == Type::SAND)
+			front_alas = SAND_ALAS;
+		else if (type == Type::STONE)
+			front_alas = STONE_ALAS;
 		std::vector<Vertex> ans;
 		//first triangle
 		Vertex bottom_left;
 		bottom_left.position = BLOCK_FRONT_BOTTOMLEFT(position.x, position.y, position.z);
-		bottom_left.textCoords = glm::vec2(0.0f, 0.0f);
+		bottom_left.textCoords = front_alas + TEXTCOORD_BOTTOMLEFT;
 		bottom_left.id = id;
 		ans.push_back(bottom_left);
 		Vertex bottom_right;
 		bottom_right.position = BLOCK_FRONT_BOTTOMRIGHT(position.x, position.y, position.z);
-		bottom_right.textCoords = glm::vec2(0.0f, 0.0f);
+		bottom_right.textCoords = front_alas + TEXTCOORD_BOTTOMRIGHT;
 		bottom_right.id = id;
 		ans.push_back(bottom_right);
 		Vertex top_right;
 		top_right.position = BLOCK_FRONT_TOPRIGHT(position.x, position.y, position.z);
-		top_right.textCoords = glm::vec2(0.0f, 0.0f);
+		top_right.textCoords = front_alas + TEXTCOORD_TOPRIGHT;
 		top_right.id = id;
 		ans.push_back(top_right);
 		
 		//second triangle
-		ans.push_back(top_right);
 		Vertex top_left;
 		top_left.position = BLOCK_FRONT_TOPLEFT(position.x, position.y, position.z);
-		top_left.textCoords = glm::vec2(0.0f, 0.0f);
+		top_left.textCoords = front_alas + TEXTCOORD_TOPLEFT;
 		top_left.id = id;
 		ans.push_back(top_left);
-
-		ans.push_back(bottom_left);
 		return ans;
 	}
 
 	//back face
 	std::vector<Vertex> get_back_face()
 	{
+		glm::vec2 back_alas;
+		if (type == Type::GRASS)
+			back_alas = GRASS_SIDE_ALAS;
+		else if (type == Type::SAND)
+			back_alas = SAND_ALAS;
+		else if (type == Type::STONE)
+			back_alas = STONE_ALAS;
 		std::vector<Vertex> ans;
 		//first triangle
 		Vertex bottom_left;
 		bottom_left.position = BLOCK_BACK_BOTTOMLEFT(position.x, position.y, position.z);
-		bottom_left.textCoords = glm::vec2(0.0f, 0.0f);
+		bottom_left.textCoords = back_alas + TEXTCOORD_BOTTOMLEFT;
 		bottom_left.id = id;
 		ans.push_back(bottom_left);
 		Vertex bottom_right;
 		bottom_right.position = BLOCK_BACK_BOTTOMRIGHT(position.x, position.y, position.z);
-		bottom_right.textCoords = glm::vec2(0.0f, 0.0f);
+		bottom_right.textCoords = back_alas + TEXTCOORD_BOTTOMRIGHT;
 		bottom_right.id = id;
 		ans.push_back(bottom_right);
 		Vertex top_right;
 		top_right.position = BLOCK_BACK_TOPRIGHT(position.x, position.y, position.z);
-		top_right.textCoords = glm::vec2(0.0f, 0.0f);
+		top_right.textCoords = back_alas + TEXTCOORD_TOPRIGHT;
 		top_right.id = id;
 		ans.push_back(top_right);
 
 		//second triangle
-		ans.push_back(top_right);
 		Vertex top_left;
 		top_left.position = BLOCK_BACK_TOPLEFT(position.x, position.y, position.z);
-		top_left.textCoords = glm::vec2(0.0f, 0.0f);
+		top_left.textCoords = back_alas + TEXTCOORD_TOPLEFT;
 		top_left.id = id;
 		ans.push_back(top_left);
-
-		ans.push_back(bottom_left);
 		return ans;
 	}
 	// right face
 	std::vector<Vertex> get_right_face()
 	{
+		glm::vec2 right_alas;
+		if (type == Type::GRASS)
+			right_alas = GRASS_SIDE_ALAS;
+		else if (type == Type::SAND)
+			right_alas = SAND_ALAS;
+		else if (type == Type::STONE)
+			right_alas = STONE_ALAS;
 		std::vector<Vertex> ans;
 		//first triangle
 		Vertex bottom_left;
 		bottom_left.position = BLOCK_RIGHT_BOTTOMLEFT(position.x, position.y, position.z);
-		bottom_left.textCoords = glm::vec2(0.0f, 0.0f);
+		bottom_left.textCoords = right_alas + TEXTCOORD_BOTTOMLEFT;
 		bottom_left.id = id;
 		ans.push_back(bottom_left);
 		Vertex bottom_right;
 		bottom_right.position = BLOCK_RIGHT_BOTTOMRIGHT(position.x, position.y, position.z);
-		bottom_right.textCoords = glm::vec2(0.0f, 0.0f);
+		bottom_right.textCoords = right_alas + TEXTCOORD_BOTTOMRIGHT;
 		bottom_right.id = id;
 		ans.push_back(bottom_right);
 		Vertex top_right;
 		top_right.position = BLOCK_RIGHT_TOPRIGHT(position.x, position.y, position.z);
-		top_right.textCoords = glm::vec2(0.0f, 0.0f);
+		top_right.textCoords = right_alas + TEXTCOORD_TOPRIGHT;
 		top_right.id = id;
 		ans.push_back(top_right);
 
 		//second triangle
-		ans.push_back(top_right);
 		Vertex top_left;
 		top_left.position = BLOCK_RIGHT_TOPLEFT(position.x, position.y, position.z);
-		top_left.textCoords = glm::vec2(0.0f, 0.0f);
+		top_left.textCoords = right_alas + TEXTCOORD_TOPLEFT;
 		top_left.id = id;
 		ans.push_back(top_left);
 
-		ans.push_back(bottom_left);
 		return ans;
 	}
 	//left face
 	std::vector<Vertex> get_left_face()
 	{
+		glm::vec2 left_alas;
+		if (type == Type::GRASS)
+			left_alas = GRASS_SIDE_ALAS;
+		else if (type == Type::SAND)
+			left_alas = SAND_ALAS;
+		else if (type == Type::STONE)
+			left_alas = STONE_ALAS;
 		std::vector<Vertex> ans;
 		//first triangle
 		Vertex bottom_left;
 		bottom_left.position = BLOCK_LEFT_BOTTOMLEFT(position.x, position.y, position.z);
-		bottom_left.textCoords = glm::vec2(0.0f, 0.0f);
+		bottom_left.textCoords = left_alas + TEXTCOORD_BOTTOMLEFT;
 		bottom_left.id = id;
 		ans.push_back(bottom_left);
 		Vertex bottom_right;
 		bottom_right.position = BLOCK_LEFT_BOTTOMRIGHT(position.x, position.y, position.z);
-		bottom_right.textCoords = glm::vec2(0.0f, 0.0f);
+		bottom_right.textCoords = left_alas + TEXTCOORD_BOTTOMRIGHT;
 		bottom_right.id = id;
 		ans.push_back(bottom_right);
 		Vertex top_right;
 		top_right.position = BLOCK_LEFT_TOPRIGHT(position.x, position.y, position.z);
-		top_right.textCoords = glm::vec2(0.0f, 0.0f);
+		top_right.textCoords = left_alas + TEXTCOORD_TOPRIGHT;
 		top_right.id = id;
 		ans.push_back(top_right);
 
 		//second triangle
-		ans.push_back(top_right);
 		Vertex top_left;
 		top_left.position = BLOCK_LEFT_TOPLEFT(position.x, position.y, position.z);
-		top_left.textCoords = glm::vec2(0.0f, 0.0f);
+		top_left.textCoords = left_alas + TEXTCOORD_TOPLEFT;
 		top_left.id = id;
 		ans.push_back(top_left);
 
-		ans.push_back(bottom_left);
 		return ans;
 	}
 	// top face
 	std::vector<Vertex> get_top_face()
 	{
+		glm::vec2 top_alas;
+		if (type == Type::GRASS)
+			top_alas = GRASS_TOP_ALAS;
+		else if (type == Type::SAND)
+			top_alas = SAND_ALAS;
+		else if (type == Type::STONE)
+			top_alas = STONE_ALAS;
 		std::vector<Vertex> ans;
 		//first triangle
 		Vertex bottom_left;
 		bottom_left.position = BLOCK_TOP_BOTTOMLEFT(position.x, position.y, position.z);
-		bottom_left.textCoords = glm::vec2(0.0f, 0.0f);
+		bottom_left.textCoords = top_alas + TEXTCOORD_BOTTOMLEFT;
 		bottom_left.id = id;
 		ans.push_back(bottom_left);
 		Vertex bottom_right;
 		bottom_right.position = BLOCK_TOP_BOTTOMRIGHT(position.x, position.y, position.z);
-		bottom_right.textCoords = glm::vec2(0.0f, 0.0f);
+		bottom_right.textCoords = top_alas + TEXTCOORD_BOTTOMRIGHT;
 		bottom_right.id = id;
 		ans.push_back(bottom_right);
 		Vertex top_right;
 		top_right.position = BLOCK_TOP_TOPRIGHT(position.x, position.y, position.z);
-		top_right.textCoords = glm::vec2(0.0f, 0.0f);
+		top_right.textCoords = top_alas + TEXTCOORD_TOPRIGHT;
 		top_right.id = id;
 		ans.push_back(top_right);
 
 		//second triangle
-		ans.push_back(top_right);
 		Vertex top_left;
 		top_left.position = BLOCK_TOP_TOPLEFT(position.x, position.y, position.z);
-		top_left.textCoords = glm::vec2(0.0f, 0.0f);
+		top_left.textCoords = top_alas + TEXTCOORD_TOPLEFT;
 		top_left.id = id;
 		ans.push_back(top_left);
 
-		ans.push_back(bottom_left);
 		return ans;
 	}
 	// bottom face
 	std::vector<Vertex> get_bottom_face()
 	{
+		glm::vec2 bottom_alas;
+		if (type == Type::GRASS)
+			bottom_alas = GRASS_BOTTOM_ALAS;
+		else if (type == Type::SAND)
+			bottom_alas = SAND_ALAS;
+		else if (type == Type::STONE)
+			bottom_alas = STONE_ALAS;
 		std::vector<Vertex> ans;
 		//first triangle
 		Vertex bottom_left;
 		bottom_left.position = BLOCK_BOTTOM_BOTTOMLEFT(position.x, position.y, position.z);
-		bottom_left.textCoords = glm::vec2(0.0f, 0.0f);
+		bottom_left.textCoords = bottom_alas + TEXTCOORD_BOTTOMLEFT;
 		bottom_left.id = id;
 		ans.push_back(bottom_left);
 		Vertex bottom_right;
 		bottom_right.position = BLOCK_BOTTOM_BOTTOMRIGHT(position.x, position.y, position.z);
-		bottom_right.textCoords = glm::vec2(0.0f, 0.0f);
+		bottom_right.textCoords = bottom_alas + TEXTCOORD_BOTTOMRIGHT;
 		bottom_right.id = id;
 		ans.push_back(bottom_right);
 		Vertex top_right;
 		top_right.position = BLOCK_BOTTOM_TOPRIGHT(position.x, position.y, position.z);
-		top_right.textCoords = glm::vec2(0.0f, 0.0f);
+		top_right.textCoords = bottom_alas + TEXTCOORD_TOPRIGHT;
 		top_right.id = id;
 		ans.push_back(top_right);
 
 		//second triangle
-		ans.push_back(top_right);
 		Vertex top_left;
 		top_left.position = BLOCK_BOTTOM_TOPLEFT(position.x, position.y, position.z);
-		top_left.textCoords = glm::vec2(0.0f, 0.0f);
+		top_left.textCoords = bottom_alas + TEXTCOORD_TOPLEFT;
 		top_left.id = id;
 		ans.push_back(top_left);
 
-		ans.push_back(bottom_left);
 		return ans;
 	}
 

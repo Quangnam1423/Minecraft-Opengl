@@ -18,9 +18,9 @@
 #include "Offset.h"
 
 
-#define CHUNK_SIZE 16
-#define CHUNK_HEIGHT 256
-#define CHUNK_AREA 256
+#define CHUNK_SIZE 32
+#define CHUNK_HEIGHT 128
+#define CHUNK_AREA 1024
 
 class World;
 class ChunkMesh;

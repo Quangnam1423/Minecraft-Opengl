@@ -25,7 +25,7 @@ void Chunk::chunk_init(FastNoiseLite &noise)
 		{
 			float x_noise = static_cast<float>(m_offset.x * CHUNK_SIZE + x);
 			float y_noise = static_cast<float>(m_offset.y * CHUNK_SIZE + z);
-			int height_size = CHUNK_SIZE * noise.GetNoise(x_noise, y_noise) * 2 + CHUNK_HEIGHT / 2;
+			int height_size = CHUNK_SIZE * noise.GetNoise(x_noise, y_noise) + CHUNK_HEIGHT / 2;
 			for (int y = 0; y < height_size; y++)
 			{
 				unsigned int id = x + y + z;
