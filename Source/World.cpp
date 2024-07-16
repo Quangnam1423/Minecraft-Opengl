@@ -4,10 +4,15 @@
 
 World::World()
 {
-	noise.SetNoiseType(FastNoiseLite::NoiseType_Perlin);
+	noise2D.SetNoiseType(FastNoiseLite::NoiseType_Perlin);
 	Seed = rand() % INT_MAX;
-	noise.SetFrequency(0.015);
-	noise.SetSeed(Seed);
+	noise2D.SetFrequency(0.015);
+	noise2D.SetSeed(Seed);
+	
+	noise3D.SetNoiseType(FastNoiseLite::NoiseType_Perlin);
+	noise3D.SetFrequency(0.2f);
+	noise3D.SetSeed(Seed);
+
 	world_init();
 }
 

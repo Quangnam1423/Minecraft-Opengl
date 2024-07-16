@@ -25,7 +25,7 @@ public:
 	World();
 	~World();
 	void Draw(shader& ourShader);std::unordered_map<offset, Chunk*> map;
-	FastNoiseLite noise;
+	FastNoiseLite noise2D , noise3D;
 	int Seed;
 private:
 	void world_init();

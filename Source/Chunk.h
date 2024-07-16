@@ -39,7 +39,7 @@ public:
 	void build_chunkmesh();
 private:
 	
-	void chunk_init(FastNoiseLite& noise);
+	void chunk_init(FastNoiseLite& noise2D , FastNoiseLite& noise3D);
 	ChunkMesh *m_mesh;
 	struct offset m_offset;
 	bool visible;
