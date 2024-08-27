@@ -158,6 +158,7 @@
   <ItemGroup>
     <None Include=".gitattributes" />
     <None Include=".gitignore" />
+    <None Include="LICENSE" />
     <None Include="Resource\Shader\fragment.shader" />
     <None Include="Resource\Shader\vertex.shader" />
   </ItemGroup>

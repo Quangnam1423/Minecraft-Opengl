@@ -54,6 +54,7 @@
     <None Include="Resource\Shader\vertex.shader" />
     <None Include="Resource\Shader\fragment.shader" />
     <None Include=".gitignore" />
+    <None Include="LICENSE" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Resource\picture.jpg">

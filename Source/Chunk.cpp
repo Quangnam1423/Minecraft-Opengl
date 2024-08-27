@@ -35,7 +35,7 @@ void Chunk::chunk_init(FastNoiseLite& noise2D , FastNoiseLite& noise3D)
 
 				float noiseValue = noise3D.GetNoise(x_noise, (float)y, y_noise);
 				noiseValue = (noiseValue + 1.0f) * 0.5f;
-				if (noiseValue < 0.15f)
+				if (noiseValue < 0.4f)
 					continue;
 				else if (noiseValue < 0.5f && y != height_size - 1)
 				{
@@ -45,9 +45,12 @@ void Chunk::chunk_init(FastNoiseLite& noise2D , FastNoiseLite& noise3D)
 				{
 					blocks[block_id] = new Block(Type::GRASS, position, id);
 				}
-				else if (noiseValue < 0.6f)
+				else if (noiseValue < 0.56f)
 				{
-					blocks[block_id] = new Block(Type::SAND, position, id);
+					if (y > CHUNK_HEIGHT / 2)
+						blocks[block_id] = new Block(Type::SAND, position, id);
+					else
+						blocks[block_id] = new Block(Type::STONE, position, id);
 				}
 				else
 					blocks[block_id] = new Block(Type::STONE, position, id);
